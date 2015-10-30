@@ -2,32 +2,36 @@
 # -*- coding: utf-8 -*-
 
 r'''
-AddNum2Pic.py
+GenDiscountCoupon.py
 
 A python test project
-Add a number to a picture.
+Generate 200 discount coupon.
 
 '''
 
-import os, sys
-from PIL import Image, ImageFont, ImageDraw
+import os
+import sys
+import random
+from datetime import datetime
 
-def addNum2Pic( picPath, num):
-    print( picPath )
-    print( num )
+RandomASC = list( range( ord('0'), ord('9')+1 ) ) + list( range( ord('a'), ord('z')+1 ) ) + list( range( ord('A'), ord('Z')+1 ) )
 
-    pic = Image.open( picPath )
-    w, h = pic.size
-    fontsize = min( w, h ) // 6
-    x = w - fontsize
-    draw = ImageDraw.Draw( pic )
-    font = ImageFont.truetype( "/usr/share/fonts/truetype/freefont/FreeSans.ttf", fontsize )
-    draw.text( ( x, 0 ), str(num), font=font, fill="red" )
-    del draw
-    pic.save("newHead.jpg")
-    pic.show()
+def genDiscountCoupon( length ):
+    
+    coupon = ''
+    genTime = ''
+    for i in range(length):
+        coupon += chr( random.choice( RandomASC ) )
+    genTime = str( datetime.now() )
+    return coupon, genTime
 
 if __name__ == '__main__':
-    addNum2Pic( 'head.jpg', 8 );
+    
+    f = open('DiscountCoupon.txt', 'w')
+    for i in range(200):
+        coupon,genTime = genDiscountCoupon(8)
+        f.write( str(i) + ' ' + coupon + ' ' + genTime + '\n' )
+
+    f.close()
 
 

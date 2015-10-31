@@ -22,15 +22,20 @@ def genDiscountCoupon( length ):
     genTime = ''
     for i in range(length):
         coupon += chr( random.choice( RandomASC ) )
-    genTime = str( datetime.now() )
+    genTime = str( datetime.now().timestamp() )
     return coupon, genTime
 
 if __name__ == '__main__':
     
     f = open('DiscountCoupon.txt', 'w')
-    for i in range(200):
+    s = set({})
+    i = 0
+    while i<200:
         coupon,genTime = genDiscountCoupon(8)
-        f.write( str(i) + ' ' + coupon + ' ' + genTime + '\n' )
+        if coupon not in s:
+            f.write( str(i) + ' ' + coupon + ' ' + genTime + '\n' )
+            s.add( coupon )
+            i += 1
 
     f.close()
 
